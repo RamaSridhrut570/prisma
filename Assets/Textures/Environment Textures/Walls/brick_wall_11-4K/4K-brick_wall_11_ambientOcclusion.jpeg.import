@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csh6361hyr3w7"
-path.s3tc="res://.godot/imported/ceramic_44_basecolor-4K.png-ca029c1399c82c0c41299cc6b8bdc7a1.s3tc.ctex"
+uid="uid://ckuwrlgq7d0pv"
+path.s3tc="res://.godot/imported/4K-brick_wall_11_ambientOcclusion.jpeg-c616ef5897b75f727f603e401deb4bc2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Textures/Environment Textures/Walls/ceramic_44-4K/ceramic_44_basecolor-4K.png"
-dest_files=["res://.godot/imported/ceramic_44_basecolor-4K.png-ca029c1399c82c0c41299cc6b8bdc7a1.s3tc.ctex"]
+source_file="res://Assets/Textures/Environment Textures/Walls/brick_wall_11-4K/4K-brick_wall_11_ambientOcclusion.jpeg"
+dest_files=["res://.godot/imported/4K-brick_wall_11_ambientOcclusion.jpeg-c616ef5897b75f727f603e401deb4bc2.s3tc.ctex"]
 
 [params]
 

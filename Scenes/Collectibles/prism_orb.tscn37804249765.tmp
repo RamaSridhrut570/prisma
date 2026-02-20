@@ -97,7 +97,6 @@ _data = {
 }
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6ygbq"]
-radius = 1.0
 
 [node name="Prism_Orb" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)

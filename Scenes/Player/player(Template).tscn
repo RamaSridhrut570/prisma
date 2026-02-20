@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://drq5xfghocn6y"]
+[gd_scene load_steps=9 format=3 uid="uid://drq5xfghocn6y"]
 
 [ext_resource type="Script" uid="uid://8vt8msanc8j6" path="res://Scripts/Player Scripts/player.gd" id="1_uvnfx"]
+[ext_resource type="AudioStream" uid="uid://bytt5uglowy1" path="res://Assets/Audio/SFX/Player/footsteps.mp3" id="2_qjil8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xe20u"]
 
@@ -99,7 +100,7 @@ _data = {
 &"RESET": SubResource("Animation_tbjo4")
 }
 
-[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("ray_cast_is_wall_check_F", "ray_cast_is_wall_check_L", "ray_cast_is_wall_check_R", "ray_cast_is_still_wall_check_F", "ray_cast_is_on_floor")]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("ray_cast_is_wall_check_F", "ray_cast_is_wall_check_L", "ray_cast_is_wall_check_R", "ray_cast_is_still_wall_check_F", "ray_cast_is_on_floor") groups=["Player"]]
 script = ExtResource("1_uvnfx")
 ray_cast_is_wall_check_F = NodePath("RayCast_is_wall_check_F")
 ray_cast_is_wall_check_L = NodePath("RayCast_is_wall_check_L")
@@ -158,3 +159,10 @@ libraries = {
 
 [node name="Vertical_Climb_Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_qjil8")
+bus = &"SFX"
+
+[node name="Dialogues" type="AudioStreamPlayer" parent="."]
+bus = &"Dialogues"

@@ -34,12 +34,12 @@ extends CharacterBody3D
 @export var camera_rotation_speed: float = 5.0
 
 @export_group("Movement Settings")
-@export var lerp_speed: float = 10.0
+@export var lerp_speed: float = 6.0
 @export var air_lerp_speed: float = 1.0
 @export var walking_speed: float = 9.0
 @export var sprinting_speed: float = 16.0
 @export var crouching_speed: float = 5.0
-@export var crouching_depth: float = -0.5
+@export var crouching_depth: float = -1.6
 @export var slide_speed: float = 12.0
 
 @export_group("Jump Settings")
@@ -126,9 +126,10 @@ var target_wall_jump_yaw: float = 0.0
 var HEAD_BOBBING_SPRINTING_SPEED = 22.0
 var HEAD_BOBBING_WALKING_SPEED = 14.0
 var HEAD_BOBBING_CROUCHING_SPEED = 10.0
-var HEAD_BOBBING_SPRINTING_INTENSITY = 0.2
-var HEAD_BOBBING_WALKING_INTENSITY = 0.1
-var HEAD_BOBBING_CROUCHING_INTENSITY = 0.05
+# Intensity: Boosted (Sprint > Walk > Crouch)
+var HEAD_BOBBING_SPRINTING_INTENSITY = 0.25
+var HEAD_BOBBING_WALKING_INTENSITY = 0.15
+var HEAD_BOBBING_CROUCHING_INTENSITY = 0.1
 
 var head_bobbing_vector: Vector2 = Vector2.ZERO
 var head_bobbing_index: float = 0.0
@@ -512,22 +513,23 @@ func get_wall_collision():
 func handle_stance_and_sliding(delta: float, input_dir: Vector2) -> void:
 	var crouch_down := Input.is_action_pressed("crouch") and can_crouch
 	var crouch_pressed := Input.is_action_just_pressed("crouch") and can_crouch
+	var head_blocked := ray_cast_crouch.is_colliding()
 
-	if crouch_down or sliding:
+	if crouch_down or sliding or head_blocked:
 		current_speed = lerp(current_speed, crouching_speed, delta * lerp_speed)
 		head.position.y = lerp(head.position.y, crouching_depth, delta * lerp_speed)
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false
 
-		# Start slide ONLY once
-		if crouch_pressed and sprinting and input_dir != Vector2.ZERO and is_on_floor() and not sliding and can_slide:
+		# Start slide ONLY once (don't start a slide just because head is blocked)
+		if crouch_pressed and sprinting and input_dir != Vector2.ZERO and is_on_floor() and not sliding and can_slide and not head_blocked:
 			start_slide(input_dir)
 
 		walking = false
 		sprinting = false
 		crouching = true
 
-	elif not ray_cast_crouch.is_colliding():
+	else:
 		standing_collision_shape.disabled = false
 		crouching_collision_shape.disabled = true
 		head.position.y = lerp(head.position.y, 0.0, delta * lerp_speed)
@@ -600,10 +602,16 @@ func handle_head_bob(delta: float, input_dir: Vector2) -> void:
 		
 	if is_on_floor() and !sliding and input_dir != Vector2.ZERO:
 		head_bobbing_vector.y = sin(head_bobbing_index)
-		head_bobbing_vector.x = sin(head_bobbing_index / 2) + 0.5
-		head.position.y = lerp(head.position.y, head_bobbing_vector.y * (head_bobbing_current_intensity / 2), delta * lerp_speed)
-		head.position.x = lerp(head.position.x, head_bobbing_vector.x * head_bobbing_current_intensity, delta * lerp_speed)
+		head_bobbing_vector.x = cos(head_bobbing_index / 2) # Figure-8 pattern
+		
+		# Apply bobbing to head position
+		var target_y = head_bobbing_vector.y * (head_bobbing_current_intensity / 2.0)
+		var target_x = head_bobbing_vector.x * head_bobbing_current_intensity
+		
+		head.position.y = lerp(head.position.y, target_y, delta * lerp_speed)
+		head.position.x = lerp(head.position.x, target_x, delta * lerp_speed)
 	else:
+		# Reset head position when not moving
 		head.position.y = lerp(head.position.y, 0.0, delta * lerp_speed)
 		head.position.x = lerp(head.position.x, 0.0, delta * lerp_speed)
 

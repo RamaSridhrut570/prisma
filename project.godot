@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 
 window/size/mode=3
 
+[global_group]
+
+Player="All the Players come in this group"
+collectible_manager="This is the collectible manager, takes care of the collected."
+
 [input]
 
 forward={

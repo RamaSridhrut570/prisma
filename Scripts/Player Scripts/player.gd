@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+
+const FOOTSTEPS = preload("uid://bytt5uglowy1")
+
+
 #################################################
 ###              NODE REFERENCES              ###
 #################################################
@@ -13,6 +17,8 @@ extends CharacterBody3D
 @onready var crouching_collision_shape: CollisionShape3D = $crouching_collision_shape
 @onready var ray_cast_crouch: RayCast3D = $RayCast_Crouch
 @onready var vertical_climb_timer: Timer = $Vertical_Climb_Timer
+@onready var sfx_player: AudioStreamPlayer = $SFX
+@onready var dialogues_player: AudioStreamPlayer = $Dialogues
 
 # Wall Detection Raycasts
 @export_group("Wall Detection")
@@ -34,12 +40,12 @@ extends CharacterBody3D
 @export var camera_rotation_speed: float = 5.0
 
 @export_group("Movement Settings")
-@export var lerp_speed: float = 10.0
+@export var lerp_speed: float = 6.0
 @export var air_lerp_speed: float = 1.0
 @export var walking_speed: float = 9.0
 @export var sprinting_speed: float = 16.0
 @export var crouching_speed: float = 5.0
-@export var crouching_depth: float = -0.5
+@export var crouching_depth: float = -1.6
 @export var slide_speed: float = 12.0
 
 @export_group("Jump Settings")
@@ -135,6 +141,9 @@ var head_bobbing_vector: Vector2 = Vector2.ZERO
 var head_bobbing_index: float = 0.0
 var head_bobbing_current_intensity: float = 0.0
 
+# --- Footstep Vars ---
+var _prev_bob_sin: float = 0.0 # Tracks last frame's sine value to detect zero-crossings
+
 # --- Camera Transform Targets ---
 var default_camera_rotation: Vector3 = Vector3.ZERO
 var climb_camera_rotation: Vector3 = Vector3(-20, 0, 0)
@@ -155,6 +164,7 @@ func _ready() -> void:
 	wall_jump_available = false
 	wall_slide_enabled = true
 	was_on_floor = is_on_floor()
+	sfx_player.stream = FOOTSTEPS
 
 
 func _process(_delta: float) -> void:
@@ -513,22 +523,23 @@ func get_wall_collision():
 func handle_stance_and_sliding(delta: float, input_dir: Vector2) -> void:
 	var crouch_down := Input.is_action_pressed("crouch") and can_crouch
 	var crouch_pressed := Input.is_action_just_pressed("crouch") and can_crouch
+	var head_blocked := ray_cast_crouch.is_colliding()
 
-	if crouch_down or sliding:
+	if crouch_down or sliding or head_blocked:
 		current_speed = lerp(current_speed, crouching_speed, delta * lerp_speed)
 		head.position.y = lerp(head.position.y, crouching_depth, delta * lerp_speed)
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false
 
-		# Start slide ONLY once
-		if crouch_pressed and sprinting and input_dir != Vector2.ZERO and is_on_floor() and not sliding and can_slide:
+		# Start slide ONLY once (don't start a slide just because head is blocked)
+		if crouch_pressed and sprinting and input_dir != Vector2.ZERO and is_on_floor() and not sliding and can_slide and not head_blocked:
 			start_slide(input_dir)
 
 		walking = false
 		sprinting = false
 		crouching = true
 
-	elif not ray_cast_crouch.is_colliding():
+	else:
 		standing_collision_shape.disabled = false
 		crouching_collision_shape.disabled = true
 		head.position.y = lerp(head.position.y, 0.0, delta * lerp_speed)
@@ -600,8 +611,14 @@ func handle_head_bob(delta: float, input_dir: Vector2) -> void:
 		head_bobbing_index += HEAD_BOBBING_CROUCHING_SPEED * delta
 		
 	if is_on_floor() and !sliding and input_dir != Vector2.ZERO:
-		head_bobbing_vector.y = sin(head_bobbing_index)
+		var current_sin := sin(head_bobbing_index)
+		head_bobbing_vector.y = current_sin
 		head_bobbing_vector.x = cos(head_bobbing_index / 2) # Figure-8 pattern
+		
+		# --- Footstep: fire on each downward zero-crossing of the sine (one step) ---
+		if _prev_bob_sin >= 0.0 and current_sin < 0.0:
+			_play_footstep()
+		_prev_bob_sin = current_sin
 		
 		# Apply bobbing to head position
 		var target_y = head_bobbing_vector.y * (head_bobbing_current_intensity / 2.0)
@@ -611,8 +628,19 @@ func handle_head_bob(delta: float, input_dir: Vector2) -> void:
 		head.position.x = lerp(head.position.x, target_x, delta * lerp_speed)
 	else:
 		# Reset head position when not moving
+		_prev_bob_sin = 0.0
 		head.position.y = lerp(head.position.y, 0.0, delta * lerp_speed)
 		head.position.x = lerp(head.position.x, 0.0, delta * lerp_speed)
+
+func _play_footstep() -> void:
+	if not sfx_player or not sfx_player.stream:
+		return
+	# Pitch range scales with bobbing intensity:
+	#   crouching (low intensity) → subtle, higher pitch
+	#   sprinting (high intensity) → heavier, lower pitch
+	var base_pitch := remap(head_bobbing_current_intensity, 0.05, 0.4, 1.2, 0.85)
+	sfx_player.pitch_scale = base_pitch + randf_range(-0.56, 0.26)
+	sfx_player.play()
 
 func handle_free_look_and_sliding(delta: float) -> void:
 	if (Input.is_action_pressed("free_look") and can_free_look) or sliding:

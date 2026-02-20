@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csh6361hyr3w7"
-path.s3tc="res://.godot/imported/ceramic_44_basecolor-4K.png-ca029c1399c82c0c41299cc6b8bdc7a1.s3tc.ctex"
+uid="uid://4eo3heoiew8a"
+path.s3tc="res://.godot/imported/4K-brick_wall_11_normal.jpeg-99c4a6519023e21686780b5ca7e71d19.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Textures/Environment Textures/Walls/ceramic_44-4K/ceramic_44_basecolor-4K.png"
-dest_files=["res://.godot/imported/ceramic_44_basecolor-4K.png-ca029c1399c82c0c41299cc6b8bdc7a1.s3tc.ctex"]
+source_file="res://Assets/Textures/Environment Textures/Walls/brick_wall_11-4K/4K-brick_wall_11_normal.jpeg"
+dest_files=["res://.godot/imported/4K-brick_wall_11_normal.jpeg-99c4a6519023e21686780b5ca7e71d19.s3tc.ctex"]
 
 [params]
 
@@ -22,12 +22,12 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://Assets/Textures/Environment Textures/brick_wall_11-4K/4K-brick_wall_11_normal.jpeg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2
