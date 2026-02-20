@@ -1,0 +1,47 @@
+[gd_scene load_steps=10 format=3 uid="uid://rtr7cvngv1t6"]
+
+[ext_resource type="Script" uid="uid://v8hnv5vytwg7" path="res://Scripts/StateMachine/StateMachine.gd" id="1_wkg5m"]
+[ext_resource type="Script" uid="uid://b5foujj0vb1j3" path="res://Scripts/StateMachine/States/idle_state.gd" id="2_jmo1h"]
+[ext_resource type="Script" uid="uid://bil4uowuwib83" path="res://Scripts/StateMachine/States/walking_state.gd" id="3_iq6pw"]
+[ext_resource type="Script" uid="uid://cxrx8ardrlh0p" path="res://Scripts/StateMachine/States/running_state.gd" id="4_npjkd"]
+[ext_resource type="Script" uid="uid://da7vjlxyf0kh2" path="res://Scripts/StateMachine/States/crouching_state.gd" id="5_pwcwx"]
+[ext_resource type="Script" uid="uid://dvl16pogman3h" path="res://Scripts/StateMachine/States/sliding_state.gd" id="6_shk4p"]
+[ext_resource type="Script" uid="uid://2oj38cjubgr" path="res://Scripts/StateMachine/States/jumping_state.gd" id="7_a0ir0"]
+[ext_resource type="Script" uid="uid://bn8hytw1mm1j4" path="res://Scripts/StateMachine/States/falling_state.gd" id="8_bcbr0"]
+[ext_resource type="Script" uid="uid://8degybscpd8f" path="res://Scripts/StateMachine/States/wall_climbing_state.gd" id="9_8p750"]
+
+[node name="StateMachine" type="Node" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_wkg5m")
+initial_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="."]
+script = ExtResource("2_jmo1h")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="WalkingState" type="Node" parent="."]
+script = ExtResource("3_iq6pw")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="RunningState" type="Node" parent="."]
+script = ExtResource("4_npjkd")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="CrouchingState" type="Node" parent="."]
+script = ExtResource("5_pwcwx")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="SlidingState" type="Node" parent="."]
+script = ExtResource("6_shk4p")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="JumpingState" type="Node" parent="."]
+script = ExtResource("7_a0ir0")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="FallingState" type="Node" parent="."]
+script = ExtResource("8_bcbr0")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"
+
+[node name="WallClimbingState" type="Node" parent="."]
+script = ExtResource("9_8p750")
+metadata/_custom_type_script = "uid://3bft7qltjvnk"

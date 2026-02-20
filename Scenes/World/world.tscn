@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://b8gacbdlnig36"]
+
+[ext_resource type="Script" uid="uid://bo6sh112uduhj" path="res://Scripts/game_manager.gd" id="1_3rhlx"]
+[ext_resource type="PackedScene" uid="uid://devlugxym4dll" path="res://Scenes/World/Stages/birth_stage.tscn" id="2_l1hd3"]
+[ext_resource type="PackedScene" uid="uid://drq5xfghocn6y" path="res://Scenes/Player/player(Template).tscn" id="2_yp2ti"]
+[ext_resource type="PackedScene" uid="uid://buediwonbpcbq" path="res://Scenes/Menus/pause_menu.tscn" id="4_vadfg"]
+[ext_resource type="PackedScene" uid="uid://bfhkenfq24rx6" path="res://Scenes/Collectibles/prism_orb.tscn" id="5_l1hd3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a02cp"]
+ground_bottom_color = Color(0.33378822, 0.34075606, 0.3547054, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_go701"]
+sky_material = SubResource("ProceduralSkyMaterial_a02cp")
+
+[sub_resource type="Environment" id="Environment_5a7ea"]
+background_mode = 2
+sky = SubResource("Sky_go701")
+reflected_light_source = 2
+tonemap_mode = 1
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_blend_mode = 4
+fog_light_energy = 0.1
+fog_density = 0.08
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_gi_inject = 0.0
+adjustment_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_3rhlx"]
+font_size = 25
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("player", "world_environment", "sun_light")]
+script = ExtResource("1_3rhlx")
+player = NodePath("player")
+world_environment = NodePath("WorldEnvironment")
+sun_light = NodePath("DirectionalLight3D")
+current_stage = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5a7ea")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 18, 0)
+shadow_enabled = true
+
+[node name="Birth_Stage" parent="." instance=ExtResource("2_l1hd3")]
+
+[node name="player" parent="." instance=ExtResource("2_yp2ti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+LAND_VEL_THRESHOLD = -49.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/UI/MarginContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="SubLabel" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_3rhlx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_vadfg")]
+
+[node name="Prism_Orb" parent="." instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.873369, 1.9999981, -0.17505646)
+
+[node name="Prism_Orb2" parent="." instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.126631, 1.9999981, -0.17505646)

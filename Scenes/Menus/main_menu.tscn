@@ -1,0 +1,145 @@
+[gd_scene load_steps=9 format=3 uid="uid://b24lmsex3wy4v"]
+
+[ext_resource type="Script" uid="uid://bme1o3bhfo872" path="res://Scripts/Menus/main_menu.gd" id="1_mhltr"]
+[ext_resource type="FontFile" uid="uid://dswag30ipi0pa" path="res://Assets/Fonts/Comfortaa/Comfortaa-Bold.ttf" id="2_penys"]
+[ext_resource type="FontFile" uid="uid://nmpac6q23uc0" path="res://Assets/Fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf" id="3_penys"]
+[ext_resource type="AudioStream" uid="uid://c0sg0wa5i1w6x" path="res://Assets/Audio/glass_006.ogg" id="4_aur2u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4vfuw"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_size = 9
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ali1k"]
+bg_color = Color(1, 0.8581998, 0.8341832, 0.5647059)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 9
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1rihp"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_color = Color(1, 0.4745098, 0.6627451, 1)
+shadow_size = 9
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qqcm8"]
+font = ExtResource("3_penys")
+font_size = 100
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 25
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(4, 9)
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mhltr")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.5
+offset_top = -58.0
+offset_right = 188.5
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_constants/separation = 16
+vertical = true
+
+[node name="Start Game" type="Button" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0.39215687, 0.3882353, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0.4745098, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_penys")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_4vfuw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ali1k")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1rihp")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ali1k")
+text = "START GAME"
+
+[node name="Controls" type="Button" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0.39215687, 0.3882353, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0.4745098, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_penys")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_4vfuw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ali1k")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1rihp")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ali1k")
+text = "CONTROLS"
+
+[node name="Exit" type="Button" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0.39215687, 0.3882353, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0.4745098, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_penys")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_4vfuw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ali1k")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1rihp")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ali1k")
+text = "EXIT"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -379.0
+offset_top = -208.0
+offset_right = 379.0
+offset_bottom = -91.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PRISMA"
+label_settings = SubResource("LabelSettings_qqcm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_aur2u")
+pitch_scale = 0.8
+bus = &"UI Sounds"
+
+[connection signal="mouse_entered" from="BoxContainer/Start Game" to="." method="_on_start_game_mouse_entered"]
+[connection signal="pressed" from="BoxContainer/Start Game" to="." method="_on_start_game_pressed"]
+[connection signal="mouse_entered" from="BoxContainer/Controls" to="." method="_on_controls_mouse_entered"]
+[connection signal="pressed" from="BoxContainer/Controls" to="." method="_on_options_pressed"]
+[connection signal="mouse_entered" from="BoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="pressed" from="BoxContainer/Exit" to="." method="_on_exit_pressed"]

@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=3 uid="uid://bfhkenfq24rx6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2htp3"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.05
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ygbq"]
+next_pass = SubResource("StandardMaterial3D_2htp3")
+albedo_color = Color(1, 0.9490196, 0.6901961, 1)
+metallic = 1.0
+metallic_specular = 1.0
+emission_enabled = true
+emission = Color(1, 0.9490196, 0.6901961, 1)
+emission_energy_multiplier = 2.0
+stencil_mode = 1
+stencil_flags = 2
+stencil_outline_thickness = 0.05
+
+[sub_resource type="TorusMesh" id="TorusMesh_ker0g"]
+lightmap_size_hint = Vector2i(33, 9)
+material = SubResource("StandardMaterial3D_6ygbq")
+inner_radius = 0.25
+outer_radius = 0.5
+
+[sub_resource type="Animation" id="Animation_2htp3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -1.5707964)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.99999976, 0.9999992, 0.99999964)]
+}
+
+[sub_resource type="Animation" id="Animation_6ygbq"]
+resource_name = "spin"
+length = 2.0
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1.5707964), Vector3(1.7769441e-16, 0.2617994, -1.5707964), Vector3(-1.7986283e-16, 0.52359885, -1.5707964), Vector3(-5.9771266e-16, 0.7853982, -1.5707964), Vector3(-4.2744844e-15, 1.0471975, -1.5707964), Vector3(-7.485413e-15, 1.3089968, -1.5707964), Vector3(-1.0480745e-14, 1.5707961, -1.5707964), Vector3(-1.0480748e-14, 3.1415925, -1.5707964)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.99999976, 0.9999992, 0.99999964), Vector3(1.125, 1.125, 1.125), Vector3(0.99999976, 0.9999992, 0.99999964)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ker0g"]
+_data = {
+&"RESET": SubResource("Animation_2htp3"),
+&"spin": SubResource("Animation_6ygbq")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6ygbq"]
+
+[node name="Prism_Orb" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.3711378e-08, 0.9999992, 0, -0.99999976, -4.3711353e-08, 0, 0, 0, 0.99999964, 0, 0, 0)
+mesh = SubResource("TorusMesh_ker0g")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.9490196, 0.6901961, 1)
+light_energy = 8.0
+light_volumetric_fog_energy = 0.001
+light_specular = 1.0
+distance_fade_enabled = true
+distance_fade_begin = 2.0
+distance_fade_length = 40.0
+omni_range = 20.0
+omni_attenuation = 10.0
+omni_shadow_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ker0g")
+}
+autoplay = "spin"
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_6ygbq")
