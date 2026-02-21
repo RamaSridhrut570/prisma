@@ -15,9 +15,8 @@ func _process(_delta: float) -> void:
 
 func _show_label():
 	sub_label.show()
-	await get_tree().create_timer(2.0).timeout
-	sub_label.hide()
+
 
 func _hide_label():
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	sub_label.hide()

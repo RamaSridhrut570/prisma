@@ -1,0 +1,137 @@
+[gd_scene load_steps=15 format=3 uid="uid://bkd47amcw0g6j"]
+
+[ext_resource type="PackedScene" uid="uid://devlugxym4dll" path="res://Scenes/World/Stages_Build/birth_stage.tscn" id="1_xapmb"]
+[ext_resource type="PackedScene" uid="uid://drq5xfghocn6y" path="res://Scenes/Player/player(Template).tscn" id="2_4vaky"]
+[ext_resource type="Script" uid="uid://cqtnhlxckbl1x" path="res://Scripts/UI Interface/ui.gd" id="3_lh360"]
+[ext_resource type="FontFile" uid="uid://dpi8c8nmqo4nb" path="res://Assets/Fonts/Comfortaa/Comfortaa-Regular.ttf" id="4_6tgbh"]
+[ext_resource type="PackedScene" uid="uid://buediwonbpcbq" path="res://Scenes/Menus/pause_menu.tscn" id="5_esjwo"]
+[ext_resource type="PackedScene" uid="uid://bfhkenfq24rx6" path="res://Scenes/Collectibles/prism_orb.tscn" id="6_qcom1"]
+[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/portal.tscn" id="7_06c8k"]
+[ext_resource type="Script" uid="uid://dek6q6ljrr4v0" path="res://Scripts/Game Managers/Stage wise/Stage-6.gd" id="8_xapmb"]
+[ext_resource type="Script" uid="uid://cwcdiibo26igj" path="res://Scripts/Game Managers/collectible_manager.gd" id="9_vad5b"]
+[ext_resource type="Script" uid="uid://dcsj4m20lbkxa" path="res://Scripts/Game Managers/stage_manager.gd" id="10_e0mpd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3rhlx"]
+font = ExtResource("4_6tgbh")
+font_size = 25
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a02cp"]
+ground_bottom_color = Color(0.33378822, 0.34075606, 0.3547054, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_go701"]
+sky_material = SubResource("ProceduralSkyMaterial_a02cp")
+
+[sub_resource type="Environment" id="Environment_5a7ea"]
+background_mode = 2
+sky = SubResource("Sky_go701")
+reflected_light_source = 2
+tonemap_mode = 1
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_blend_mode = 4
+fog_light_energy = 0.1
+fog_density = 0.08
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_gi_inject = 0.0
+adjustment_enabled = true
+
+[node name="World" type="Node3D"]
+
+[node name="Birth_Stage" parent="." instance=ExtResource("1_xapmb")]
+
+[node name="player" parent="." instance=ExtResource("2_4vaky")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 6, 0)
+LAND_VEL_THRESHOLD = -49.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("sub_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_lh360")
+sub_label = NodePath("MarginContainer/GridContainer/SubLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/UI/MarginContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="SubLabel" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_3rhlx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("5_esjwo")]
+
+[node name="Collectibles" type="Node" parent="."]
+
+[node name="Prism_Orb" parent="Collectibles" instance=ExtResource("6_qcom1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.873369, 1.9999981, 4.8249435)
+
+[node name="Prism_Orb2" parent="Collectibles" instance=ExtResource("6_qcom1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.873369, 1.9999981, -5.1750565)
+
+[node name="Prism_Orb3" parent="Collectibles" instance=ExtResource("6_qcom1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, -21.175056)
+
+[node name="Prism_Orb4" parent="Collectibles" instance=ExtResource("6_qcom1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, 24.824944)
+
+[node name="Prism_Orb5" parent="Collectibles" instance=ExtResource("6_qcom1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.12663, 1.3017786, 61.824944)
+
+[node name="Prism_Orb6" parent="Collectibles" instance=ExtResource("6_qcom1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.12663, 1.3017786, 61.824944)
+
+[node name="Portal" parent="." instance=ExtResource("7_06c8k")]
+transform = Transform3D(-3.4969112e-08, -0.8, 0, 0.8, -3.4969112e-08, 0, 0, 0, 0.8, 68, 2, 54)
+
+[node name="Game_Manager" type="Node" parent="." node_paths=PackedStringArray("stage_manager", "collectible_manager")]
+script = ExtResource("8_xapmb")
+stage_manager = NodePath("StageManager")
+collectible_manager = NodePath("CollectibleManager")
+
+[node name="CollectibleManager" type="Node" parent="Game_Manager" node_paths=PackedStringArray("sub_label", "ui", "portal") groups=["collectible_manager"]]
+script = ExtResource("9_vad5b")
+sub_label = NodePath("../../CanvasLayer/UI/MarginContainer/GridContainer/SubLabel")
+ui = NodePath("../../CanvasLayer/UI")
+portal = NodePath("../../Portal")
+
+[node name="StageManager" type="Node" parent="Game_Manager" node_paths=PackedStringArray("player", "world_environment", "sun_light", "portal")]
+script = ExtResource("10_e0mpd")
+player = NodePath("../../player")
+world_environment = NodePath("../Environment/WorldEnvironment")
+sun_light = NodePath("../Environment/DirectionalLight3D")
+portal = NodePath("../../Portal")
+current_stage = 5
+
+[node name="Environment" type="Node" parent="Game_Manager"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Game_Manager/Environment"]
+environment = SubResource("Environment_5a7ea")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Game_Manager/Environment"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 18, 0)
+shadow_enabled = true

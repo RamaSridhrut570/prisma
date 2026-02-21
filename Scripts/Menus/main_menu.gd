@@ -1,6 +1,7 @@
 extends Control
 
-const MAIN = preload("uid://b8gacbdlnig36")
+const STAGE_1 = preload("uid://dpc613hns36js")
+const STAGE_3 = preload("uid://y8dqo0h6rgly")
 const GLASS_006 = preload("uid://c0sg0wa5i1w6x")
 
 @onready var start_game: Button = $"BoxContainer/Start Game"
@@ -37,4 +38,4 @@ func _on_exit_mouse_entered() -> void:
 		sfx.play()
 
 func _on_start_game_pressed() -> void:
-	get_tree().change_scene_to_file("uid://b8gacbdlnig36")
+	get_tree().change_scene_to_file("uid://y8dqo0h6rgly")

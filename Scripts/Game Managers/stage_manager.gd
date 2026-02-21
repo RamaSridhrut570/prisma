@@ -6,6 +6,7 @@ extends Node
 # Reference to Environment Nodes (Assign in inspector)
 @export var world_environment: WorldEnvironment
 @export var sun_light: DirectionalLight3D
+@export var portal: Node
 
 # Current active stage (Backing variable)
 var _current_stage: Stage = Stage.BIRTH
@@ -160,6 +161,7 @@ func _apply_stage_color(color: Color, stage: Stage) -> void:
 func _setup_birth() -> void:
 	print("Stage: Birth")
 	_apply_stage_color(birth_color, Stage.BIRTH) # Soft Reddish/Pinkish (Sunrise/Peach)
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = childhood_color
 	if not player: return
 
 	# --- MECHANICS ---
@@ -197,6 +199,7 @@ func _setup_birth() -> void:
 func _setup_childhood() -> void:
 	print("Stage: Childhood")
 	_apply_stage_color(childhood_color, Stage.CHILDHOOD) # Bright Orange (energetic/playful)
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = youth_color
 	if not player: return
 
 	# --- MECHANICS ---
@@ -234,6 +237,7 @@ func _setup_childhood() -> void:
 func _setup_youth() -> void:
 	print("Stage: Youth")
 	_apply_stage_color(youth_color, Stage.YOUTH) # Amber/Gold (reflective)
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = adulthood_color
 	if not player: return
 
 	# FULL MOVEMENT KIT
@@ -272,6 +276,7 @@ func _setup_youth() -> void:
 func _setup_adulthood() -> void:
 	print("Stage: Adulthood")
 	_apply_stage_color(adulthood_color, Stage.ADULTHOOD) # Light Green
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = midlife_color
 	if not player: return
 
 	player.can_walk = true
@@ -310,6 +315,7 @@ func _setup_adulthood() -> void:
 func _setup_midlife() -> void:
 	print("Stage: Midlife")
 	_apply_stage_color(midlife_color, Stage.MIDLIFE) # Deep Green (grounded)
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = aging_color
 	if not player: return
 
 	# Reflective, slightly heavier
@@ -350,6 +356,7 @@ func _setup_midlife() -> void:
 func _setup_aging() -> void:
 	print("Stage: Aging")
 	_apply_stage_color(aging_color, Stage.AGING) # Purple (wisdom, calm)
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = death_color
 	if not player: return
 
 	player.can_walk = true
@@ -390,6 +397,7 @@ func _setup_aging() -> void:
 func _setup_death() -> void:
 	print("Stage: Death")
 	_apply_stage_color(death_color, Stage.DEATH) # Deep Red (finality)
+	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = Color.WHITE
 	if not player: return
 
 	# The final walk
