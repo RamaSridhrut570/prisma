@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bip5u0caiskll"
+path="res://.godot/imported/childhood_2.ogg-e79df4ce99410a2bb87901ebb6687ab0.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Dialogues/Childhood Stage/childhood_2.ogg"
+dest_files=["res://.godot/imported/childhood_2.ogg-e79df4ce99410a2bb87901ebb6687ab0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dpc613hns36js"]
+[gd_scene load_steps=25 format=3 uid="uid://dpc613hns36js"]
 
 [ext_resource type="Script" uid="uid://bo6sh112uduhj" path="res://Scripts/Game Managers/Stage wise/Stage-1.gd" id="1_3rhlx"]
 [ext_resource type="PackedScene" uid="uid://devlugxym4dll" path="res://Scenes/World/Stages_Build/birth_stage.tscn" id="2_l1hd3"]
@@ -9,11 +9,27 @@
 [ext_resource type="Script" uid="uid://cwcdiibo26igj" path="res://Scripts/Game Managers/collectible_manager.gd" id="6_adcqc"]
 [ext_resource type="FontFile" uid="uid://dpi8c8nmqo4nb" path="res://Assets/Fonts/Comfortaa/Comfortaa-Regular.ttf" id="6_fcotr"]
 [ext_resource type="Script" uid="uid://cqtnhlxckbl1x" path="res://Scripts/UI Interface/ui.gd" id="6_y0d6x"]
-[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/portal.tscn" id="10_ugf0j"]
+[ext_resource type="PackedScene" uid="uid://eldoi4c67px8" path="res://Scenes/World/tutorial.tscn" id="8_fuwiw"]
+[ext_resource type="TextMesh" uid="uid://dkq0top4285bi" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_crouch.tres" id="9_dym6d"]
+[ext_resource type="TextMesh" uid="uid://drhauunvl3xdi" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_collect.tres" id="10_0c6iv"]
+[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/World/portal.tscn" id="10_ugf0j"]
+[ext_resource type="TextMesh" uid="uid://cfx661ke7ophj" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_move.tres" id="11_kdgoc"]
+[ext_resource type="TextMesh" uid="uid://bqyo8iowbwvi4" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_follow.tres" id="12_2tg4p"]
+[ext_resource type="AudioStream" uid="uid://bv33th1lyqua5" path="res://Assets/Audio/SFX/Player/Death_by_falling.mp3" id="16_35yei"]
+[ext_resource type="Script" uid="uid://bt2oen8f6bg2i" path="res://Scripts/Game Managers/Stage wise Dialogue trigger/Dia-Stage-1.gd" id="17_ol2r1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3rhlx"]
 font = ExtResource("6_fcotr")
-font_size = 25
+font_size = 36
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ol2r1"]
+size = Vector3(9, 2, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_08n6b"]
+size = Vector3(5, 3, 17)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5d78i"]
+size = Vector3(6, 6, 17)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a02cp"]
 ground_bottom_color = Color(0.33378822, 0.34075606, 0.3547054, 1)
@@ -43,7 +59,7 @@ adjustment_enabled = true
 [node name="Birth_Stage" parent="." instance=ExtResource("2_l1hd3")]
 
 [node name="player" parent="." instance=ExtResource("2_yp2ti")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 6, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 2, 4)
 LAND_VEL_THRESHOLD = -49.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -77,6 +93,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
+[node name="Label" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_3rhlx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SubLabel" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_3rhlx")
@@ -85,16 +107,19 @@ vertical_alignment = 1
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_vadfg")]
 
+[node name="Portal" parent="." instance=ExtResource("10_ugf0j")]
+transform = Transform3D(-3.4969112e-08, -0.8, 0, 0.8, -3.4969112e-08, 0, 0, 0, 0.8, 68, 2, 54)
+
 [node name="Collectibles" type="Node" parent="."]
 
 [node name="Prism_Orb" parent="Collectibles" instance=ExtResource("5_l1hd3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.873369, 1.9999981, 4.8249435)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.873369, 1.9999981, -4.1750565)
 
 [node name="Prism_Orb2" parent="Collectibles" instance=ExtResource("5_l1hd3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.873369, 1.9999981, -5.1750565)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.873369, 1.9999981, -4.1750565)
 
 [node name="Prism_Orb3" parent="Collectibles" instance=ExtResource("5_l1hd3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, -21.175056)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 6, -21.175)
 
 [node name="Prism_Orb4" parent="Collectibles" instance=ExtResource("5_l1hd3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, 24.824944)
@@ -102,14 +127,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, 24.82494
 [node name="Prism_Orb5" parent="Collectibles" instance=ExtResource("5_l1hd3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.12663, 1.3017786, 61.824944)
 
+[node name="Prism_Orb9" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.126633, 1.3017786, 48.824944)
+
+[node name="Prism_Orb10" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.126633, 1.3017786, 57.824944)
+
+[node name="Prism_Orb11" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.126633, 1.3017786, 53.824944)
+
 [node name="Prism_Orb6" parent="Collectibles" instance=ExtResource("5_l1hd3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.12663, 1.3017786, 61.824944)
 
-[node name="Portal" parent="." instance=ExtResource("10_ugf0j")]
-transform = Transform3D(-3.4969112e-08, -0.8, 0, 0.8, -3.4969112e-08, 0, 0, 0, 0.8, 68, 2, 54)
+[node name="Prism_Orb7" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 2.3017786, -10.175056)
 
-[node name="Game_Manager" type="Node" parent="." node_paths=PackedStringArray("stage_manager", "collectible_manager")]
+[node name="Prism_Orb8" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.12663, 1.3017786, 51.824944)
+
+[node name="Tutorial" type="Node" parent="."]
+
+[node name="Tutorial_Text" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 1)
+mesh = ExtResource("9_dym6d")
+
+[node name="Tutorial_Text2" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -3)
+mesh = ExtResource("10_0c6iv")
+
+[node name="Tutorial_Text3" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 2, 4)
+mesh = ExtResource("11_kdgoc")
+
+[node name="Tutorial_Text4" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, 1)
+mesh = ExtResource("12_2tg4p")
+
+[node name="Death_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_35yei")
+pitch_scale = 0.8
+bus = &"Death"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+bus = &"BGM"
+
+[node name="Game_Manager" type="Node" parent="." node_paths=PackedStringArray("death_sound", "stage_manager", "collectible_manager")]
 script = ExtResource("1_3rhlx")
+death_sound = NodePath("../Death_sound")
 stage_manager = NodePath("StageManager")
 collectible_manager = NodePath("CollectibleManager")
 
@@ -125,6 +189,31 @@ player = NodePath("../../player")
 world_environment = NodePath("../Environment/WorldEnvironment")
 sun_light = NodePath("../Environment/DirectionalLight3D")
 portal = NodePath("../../Portal")
+
+[node name="Dialogue Triggers" type="Node" parent="Game_Manager" node_paths=PackedStringArray("player")]
+script = ExtResource("17_ol2r1")
+player = NodePath("../../player")
+
+[node name="Area3D" type="Area3D" parent="Game_Manager/Dialogue Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 6, -21)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game_Manager/Dialogue Triggers/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+shape = SubResource("BoxShape3D_ol2r1")
+
+[node name="Area3D2" type="Area3D" parent="Game_Manager/Dialogue Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 6, 54)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game_Manager/Dialogue Triggers/Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, -5, 0.5)
+shape = SubResource("BoxShape3D_08n6b")
+
+[node name="Area3D3" type="Area3D" parent="Game_Manager/Dialogue Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41, 6, 54)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game_Manager/Dialogue Triggers/Area3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, -3, 0.5)
+shape = SubResource("BoxShape3D_5d78i")
 
 [node name="Environment" type="Node" parent="Game_Manager"]
 

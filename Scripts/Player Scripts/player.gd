@@ -1,7 +1,8 @@
 extends CharacterBody3D
 
 
-const FOOTSTEPS = preload("uid://bytt5uglowy1")
+const FOOTSTEPS = preload("uid://cmktost4kxabt")
+
 
 
 #################################################
@@ -19,6 +20,7 @@ const FOOTSTEPS = preload("uid://bytt5uglowy1")
 @onready var vertical_climb_timer: Timer = $Vertical_Climb_Timer
 @onready var sfx_player: AudioStreamPlayer = $SFX
 @onready var dialogues_player: AudioStreamPlayer = $Dialogues
+@onready var torch_light: SpotLight3D = $neck/head/eyes/Camera3D/TorchLight
 
 # Wall Detection Raycasts
 @export_group("Wall Detection")
@@ -56,7 +58,7 @@ const FOOTSTEPS = preload("uid://bytt5uglowy1")
 @export var enable_double_jump: bool = true
 
 @export_group("Fall and Land Settings")
-@export var FALL_VEL_THRESHOLD := -64.0
+@export var FALL_VEL_THRESHOLD := -36.0
 @export var LAND_VEL_THRESHOLD := -36.0
 
 @export_group("Wall Mechanics")
@@ -80,6 +82,7 @@ const FOOTSTEPS = preload("uid://bytt5uglowy1")
 @export var can_wall_slide: bool = true
 @export var can_free_look: bool = true
 @export var can_look: bool = true
+@export var can_torch: bool = false
 
 # Calculated Physics Constants
 @onready var JUMP_VELOCITY: float = ((2.0 * JUMP_HEIGHT) / JUMP_TIME_TO_PEAK) * -1.0
@@ -165,6 +168,8 @@ func _ready() -> void:
 	wall_slide_enabled = true
 	was_on_floor = is_on_floor()
 	sfx_player.stream = FOOTSTEPS
+	if torch_light:
+		torch_light.visible = can_torch
 
 
 func _process(_delta: float) -> void:
@@ -220,6 +225,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if Input.is_action_just_pressed("toggle_wall_slide"):
 		wall_slide_enabled = !wall_slide_enabled
+
+	if Input.is_action_just_pressed("toggle_torch") and can_torch:
+		if torch_light:
+			torch_light.visible = !torch_light.visible
 		
 	if event is InputEventKey and event.pressed and Input.is_action_pressed("escape"):
 		match Input.get_mouse_mode():

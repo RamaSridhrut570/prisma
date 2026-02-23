@@ -152,6 +152,13 @@ transform = Transform3D(1, 0, 0, 0, 0.997564, 0.06975649, 0, -0.06975649, 0.9975
 current = true
 fov = 90.0
 
+[node name="TorchLight" type="SpotLight3D" parent="neck/head/eyes/Camera3D"]
+light_energy = 4.0
+light_volumetric_fog_energy = 0.5
+distance_fade_enabled = true
+distance_fade_begin = 9.0
+spot_range = 8.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="neck/head/eyes"]
 libraries = {
 &"": SubResource("AnimationLibrary_nch5d")

@@ -38,7 +38,6 @@ shadow_offset = Vector2(0, 4)
 font = ExtResource("3_penys")
 font_size = 100
 outline_size = 16
-outline_color = Color(0, 0, 0, 1)
 shadow_size = 25
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(4, 9)

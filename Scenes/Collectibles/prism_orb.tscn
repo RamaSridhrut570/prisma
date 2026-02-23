@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://blbgte8v011cu" path="res://Scripts/Collectibles/prism_orb.gd" id="1_2htp3"]
 [ext_resource type="AudioStream" uid="uid://krgwijrd6fm5" path="res://Assets/Audio/SFX/Collectibles/collect.mp3" id="2_ker0g"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2htp3"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ker0g"]
 render_priority = 1
 transparency = 1
 shading_mode = 0
@@ -16,7 +16,7 @@ stencil_compare = 5
 metadata/_stencil_owned = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ygbq"]
-next_pass = SubResource("StandardMaterial3D_2htp3")
+next_pass = SubResource("StandardMaterial3D_ker0g")
 albedo_color = Color(1, 0.9490196, 0.6901961, 1)
 metallic = 1.0
 metallic_specular = 1.0
@@ -35,6 +35,7 @@ outer_radius = 0.5
 
 [sub_resource type="Animation" id="Animation_2htp3"]
 length = 0.001
+step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -58,6 +59,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0.99999976, 0.9999992, 0.99999964)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_6ygbq"]
@@ -89,11 +102,23 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0.99999976, 0.9999992, 0.99999964), Vector3(1.125, 1.125, 1.125), Vector3(0.99999976, 0.9999992, 0.99999964)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 1, 1.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.25, 0), Vector3(0, -0.25, 0), Vector3(0, 0.25, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ker0g"]
 _data = {
 &"RESET": SubResource("Animation_2htp3"),
-&"spin": SubResource("Animation_6ygbq")
+&"spin_levitate": SubResource("Animation_6ygbq")
 }
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6ygbq"]
@@ -110,7 +135,7 @@ mesh = SubResource("TorusMesh_ker0g")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(1, 0.9490196, 0.6901961, 1)
 light_energy = 8.0
-light_volumetric_fog_energy = 0.001
+light_volumetric_fog_energy = 0.0
 light_specular = 1.0
 distance_fade_enabled = true
 distance_fade_begin = 2.0
@@ -123,7 +148,7 @@ omni_shadow_mode = 0
 libraries = {
 &"": SubResource("AnimationLibrary_ker0g")
 }
-autoplay = "spin"
+autoplay = "spin_levitate"
 
 [node name="Area3D" type="Area3D" parent="."]
 

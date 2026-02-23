@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://cwcdiibo26igj" path="res://Scripts/Game Managers/collectible_manager.gd" id="6_adcqc"]
 [ext_resource type="FontFile" uid="uid://dpi8c8nmqo4nb" path="res://Assets/Fonts/Comfortaa/Comfortaa-Regular.ttf" id="6_fcotr"]
 [ext_resource type="Script" uid="uid://cqtnhlxckbl1x" path="res://Scripts/UI Interface/ui.gd" id="6_y0d6x"]
-[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/portal.tscn" id="10_ugf0j"]
+[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/World/portal.tscn" id="10_ugf0j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3rhlx"]
 font = ExtResource("6_fcotr")

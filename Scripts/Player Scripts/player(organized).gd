@@ -1,5 +1,10 @@
 extends CharacterBody3D
 
+
+const FOOTSTEPS = preload("uid://cmktost4kxabt") ## Add any single footstep sound
+
+
+
 #################################################
 ###              NODE REFERENCES              ###
 #################################################
@@ -13,6 +18,9 @@ extends CharacterBody3D
 @onready var crouching_collision_shape: CollisionShape3D = $crouching_collision_shape
 @onready var ray_cast_crouch: RayCast3D = $RayCast_Crouch
 @onready var vertical_climb_timer: Timer = $Vertical_Climb_Timer
+@onready var sfx_player: AudioStreamPlayer = $SFX
+@onready var dialogues_player: AudioStreamPlayer = $Dialogues
+@onready var torch_light: SpotLight3D = $neck/head/eyes/Camera3D/TorchLight
 
 # Wall Detection Raycasts
 @export_group("Wall Detection")
@@ -50,7 +58,7 @@ extends CharacterBody3D
 @export var enable_double_jump: bool = true
 
 @export_group("Fall and Land Settings")
-@export var FALL_VEL_THRESHOLD := -64.0
+@export var FALL_VEL_THRESHOLD := -36.0
 @export var LAND_VEL_THRESHOLD := -36.0
 
 @export_group("Wall Mechanics")
@@ -74,6 +82,7 @@ extends CharacterBody3D
 @export var can_wall_slide: bool = true
 @export var can_free_look: bool = true
 @export var can_look: bool = true
+@export var can_torch: bool = false
 
 # Calculated Physics Constants
 @onready var JUMP_VELOCITY: float = ((2.0 * JUMP_HEIGHT) / JUMP_TIME_TO_PEAK) * -1.0
@@ -135,6 +144,9 @@ var head_bobbing_vector: Vector2 = Vector2.ZERO
 var head_bobbing_index: float = 0.0
 var head_bobbing_current_intensity: float = 0.0
 
+# --- Footstep Vars ---
+var _prev_bob_sin: float = 0.0 # Tracks last frame's sine value to detect zero-crossings
+
 # --- Camera Transform Targets ---
 var default_camera_rotation: Vector3 = Vector3.ZERO
 var climb_camera_rotation: Vector3 = Vector3(-20, 0, 0)
@@ -155,6 +167,9 @@ func _ready() -> void:
 	wall_jump_available = false
 	wall_slide_enabled = true
 	was_on_floor = is_on_floor()
+	sfx_player.stream = FOOTSTEPS
+	if torch_light:
+		torch_light.visible = can_torch
 
 
 func _process(_delta: float) -> void:
@@ -210,6 +225,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if Input.is_action_just_pressed("toggle_wall_slide"):
 		wall_slide_enabled = !wall_slide_enabled
+
+	if Input.is_action_just_pressed("toggle_torch") and can_torch:
+		if torch_light:
+			torch_light.visible = !torch_light.visible
 		
 	if event is InputEventKey and event.pressed and Input.is_action_pressed("escape"):
 		match Input.get_mouse_mode():
@@ -601,8 +620,14 @@ func handle_head_bob(delta: float, input_dir: Vector2) -> void:
 		head_bobbing_index += HEAD_BOBBING_CROUCHING_SPEED * delta
 		
 	if is_on_floor() and !sliding and input_dir != Vector2.ZERO:
-		head_bobbing_vector.y = sin(head_bobbing_index)
+		var current_sin := sin(head_bobbing_index)
+		head_bobbing_vector.y = current_sin
 		head_bobbing_vector.x = cos(head_bobbing_index / 2) # Figure-8 pattern
+		
+		# --- Footstep: fire on each downward zero-crossing of the sine (one step) ---
+		if _prev_bob_sin >= 0.0 and current_sin < 0.0:
+			_play_footstep()
+		_prev_bob_sin = current_sin
 		
 		# Apply bobbing to head position
 		var target_y = head_bobbing_vector.y * (head_bobbing_current_intensity / 2.0)
@@ -612,8 +637,19 @@ func handle_head_bob(delta: float, input_dir: Vector2) -> void:
 		head.position.x = lerp(head.position.x, target_x, delta * lerp_speed)
 	else:
 		# Reset head position when not moving
+		_prev_bob_sin = 0.0
 		head.position.y = lerp(head.position.y, 0.0, delta * lerp_speed)
 		head.position.x = lerp(head.position.x, 0.0, delta * lerp_speed)
+
+func _play_footstep() -> void:
+	if not sfx_player or not sfx_player.stream:
+		return
+	# Pitch range scales with bobbing intensity:
+	#   crouching (low intensity) → subtle, higher pitch
+	#   sprinting (high intensity) → heavier, lower pitch
+	var base_pitch := remap(head_bobbing_current_intensity, 0.05, 0.4, 1.2, 0.85)
+	sfx_player.pitch_scale = base_pitch + randf_range(-0.56, 0.26)
+	sfx_player.play()
 
 func handle_free_look_and_sliding(delta: float) -> void:
 	if (Input.is_action_pressed("free_look") and can_free_look) or sliding:

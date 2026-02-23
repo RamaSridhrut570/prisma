@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://eldoi4c67px8"]
+
+[node name="Tutorial_Text" type="MeshInstance3D"]

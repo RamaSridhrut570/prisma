@@ -1,6 +1,6 @@
 extends Node3D
 
-const COLLECT = preload("uid://krgwijrd6fm5")
+const COLLECT = preload("uid://bjc1bk02avwd7")
 
 @onready var audio_player = $AudioStreamPlayer
 @onready var mesh = $MeshInstance3D

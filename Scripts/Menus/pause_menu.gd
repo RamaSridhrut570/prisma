@@ -1,6 +1,7 @@
 extends Control
 
-const Main_Menu = preload("uid://b24lmsex3wy4v")
+const Main_Menu_3D = preload("uid://bev2rkaxkq873")
+
 const GLASS_006 = preload("uid://c0sg0wa5i1w6x")
 
 
@@ -36,7 +37,7 @@ func _on_resume_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("uid://b24lmsex3wy4v")
+	get_tree().change_scene_to_file("uid://bev2rkaxkq873")
 
 func _on_restart_pressed() -> void:
 	resume()
@@ -51,9 +52,6 @@ func _on_restart_mouse_entered() -> void:
 	if sfx.finished:
 		sfx.play()
 
-func _on_controls_mouse_entered() -> void:
-	if sfx.finished:
-		sfx.play()
 
 func _on_exit_mouse_entered() -> void:
 	if sfx.finished:

@@ -1,0 +1,16 @@
+[gd_resource type="TextMesh" load_steps=3 format=3 uid="uid://dgh0badcacb28"]
+
+[ext_resource type="FontFile" uid="uid://nmpac6q23uc0" path="res://Assets/Fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf" id="1_04i82"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqjnp"]
+emission_enabled = true
+emission = Color(0.60933006, 0.6093301, 0.60933006, 1)
+emission_energy_multiplier = 2.0
+billboard_mode = 1
+
+[resource]
+material = SubResource("StandardMaterial3D_gqjnp")
+text = "JUMP ONTO THE WALL TO WALL RUN"
+font = ExtResource("1_04i82")
+font_size = 64
+autowrap_mode = 2

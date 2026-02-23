@@ -1,0 +1,16 @@
+[gd_resource type="TextMesh" load_steps=3 format=3 uid="uid://bwhf26cifvie5"]
+
+[ext_resource type="FontFile" uid="uid://nmpac6q23uc0" path="res://Assets/Fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf" id="1_3udd2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqjnp"]
+emission_enabled = true
+emission = Color(0.60933006, 0.6093301, 0.60933006, 1)
+emission_energy_multiplier = 2.0
+billboard_mode = 1
+
+[resource]
+material = SubResource("StandardMaterial3D_gqjnp")
+text = "DOUBLE CLICK THE SPACEBAR TO DOUBLE JUMP"
+font = ExtResource("1_3udd2")
+font_size = 64
+autowrap_mode = 2

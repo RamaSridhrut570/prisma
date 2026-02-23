@@ -1,0 +1,44 @@
+extends Node
+
+const YOUTH_1 = preload("uid://dqo6plec4p0sl")
+const YOUTH_2 = preload("uid://dvrlc544epuw7")
+
+
+@onready var area_3d: Area3D = $Area3D
+@onready var area_3d_2: Area3D = $Area3D2
+
+
+@export var player: CharacterBody3D
+
+
+func _ready() -> void:
+	area_3d.body_entered.connect(_on_area_1_body_entered)
+	area_3d_2.body_entered.connect(_on_area_2_body_entered)
+
+
+func _get_dialogues_player() -> AudioStreamPlayer:
+	return player.get_node("Dialogues") as AudioStreamPlayer
+
+
+func _on_area_1_body_entered(body: Node3D) -> void:
+	if body != player:
+		return
+	area_3d.monitoring = false
+	var dp := _get_dialogues_player()
+	dp.stream = YOUTH_1
+	dp.play()
+	await dp.finished
+	area_3d.monitoring = false
+	area_3d.monitorable = false
+
+
+func _on_area_2_body_entered(body: Node3D) -> void:
+	if body != player:
+		return
+	area_3d_2.monitoring = false
+	var dp := _get_dialogues_player()
+	dp.stream = YOUTH_2
+	dp.play()
+	await dp.finished
+	area_3d_2.monitoring = false
+	area_3d_2.monitorable = false

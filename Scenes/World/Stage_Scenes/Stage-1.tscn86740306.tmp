@@ -1,0 +1,185 @@
+[gd_scene load_steps=21 format=3 uid="uid://dpc613hns36js"]
+
+[ext_resource type="Script" uid="uid://bo6sh112uduhj" path="res://Scripts/Game Managers/Stage wise/Stage-1.gd" id="1_3rhlx"]
+[ext_resource type="PackedScene" uid="uid://devlugxym4dll" path="res://Scenes/World/Stages_Build/birth_stage.tscn" id="2_l1hd3"]
+[ext_resource type="PackedScene" uid="uid://drq5xfghocn6y" path="res://Scenes/Player/player(Template).tscn" id="2_yp2ti"]
+[ext_resource type="Script" uid="uid://dcsj4m20lbkxa" path="res://Scripts/Game Managers/stage_manager.gd" id="3_7staa"]
+[ext_resource type="PackedScene" uid="uid://buediwonbpcbq" path="res://Scenes/Menus/pause_menu.tscn" id="4_vadfg"]
+[ext_resource type="PackedScene" uid="uid://bfhkenfq24rx6" path="res://Scenes/Collectibles/prism_orb.tscn" id="5_l1hd3"]
+[ext_resource type="Script" uid="uid://cwcdiibo26igj" path="res://Scripts/Game Managers/collectible_manager.gd" id="6_adcqc"]
+[ext_resource type="FontFile" uid="uid://dpi8c8nmqo4nb" path="res://Assets/Fonts/Comfortaa/Comfortaa-Regular.ttf" id="6_fcotr"]
+[ext_resource type="Script" uid="uid://cqtnhlxckbl1x" path="res://Scripts/UI Interface/ui.gd" id="6_y0d6x"]
+[ext_resource type="PackedScene" uid="uid://eldoi4c67px8" path="res://Scenes/World/tutorial.tscn" id="8_fuwiw"]
+[ext_resource type="TextMesh" uid="uid://dkq0top4285bi" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_crouch.tres" id="9_dym6d"]
+[ext_resource type="TextMesh" uid="uid://drhauunvl3xdi" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_collect.tres" id="10_0c6iv"]
+[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/World/portal.tscn" id="10_ugf0j"]
+[ext_resource type="TextMesh" uid="uid://cfx661ke7ophj" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_move.tres" id="11_kdgoc"]
+[ext_resource type="TextMesh" uid="uid://bqyo8iowbwvi4" path="res://Scenes/Tutorial Text Meshes/Stage-1/tutorial_follow.tres" id="12_2tg4p"]
+[ext_resource type="AudioStream" uid="uid://bv33th1lyqua5" path="res://Assets/Audio/SFX/Player/Death_by_falling.mp3" id="16_35yei"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3rhlx"]
+font = ExtResource("6_fcotr")
+font_size = 36
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a02cp"]
+ground_bottom_color = Color(0.33378822, 0.34075606, 0.3547054, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_go701"]
+sky_material = SubResource("ProceduralSkyMaterial_a02cp")
+
+[sub_resource type="Environment" id="Environment_5a7ea"]
+background_mode = 2
+sky = SubResource("Sky_go701")
+reflected_light_source = 2
+tonemap_mode = 1
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_blend_mode = 4
+fog_light_energy = 0.1
+fog_density = 0.08
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_gi_inject = 0.0
+adjustment_enabled = true
+
+[node name="World" type="Node3D"]
+
+[node name="Birth_Stage" parent="." instance=ExtResource("2_l1hd3")]
+
+[node name="player" parent="." instance=ExtResource("2_yp2ti")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9, 6, 5)
+LAND_VEL_THRESHOLD = -49.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("sub_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_y0d6x")
+sub_label = NodePath("MarginContainer/GridContainer/SubLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/UI/MarginContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_3rhlx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubLabel" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_3rhlx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_vadfg")]
+
+[node name="Portal" parent="." instance=ExtResource("10_ugf0j")]
+transform = Transform3D(-3.4969112e-08, -0.8, 0, 0.8, -3.4969112e-08, 0, 0, 0, 0.8, 68, 2, 54)
+
+[node name="Collectibles" type="Node" parent="."]
+
+[node name="Prism_Orb" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.873369, 1.9999981, -4.1750565)
+
+[node name="Prism_Orb2" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.873369, 1.9999981, -4.1750565)
+
+[node name="Prism_Orb3" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, -21.175056)
+
+[node name="Prism_Orb4" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 5.999998, 24.824944)
+
+[node name="Prism_Orb5" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.12663, 1.3017786, 61.824944)
+
+[node name="Prism_Orb9" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.126633, 1.3017786, 48.824944)
+
+[node name="Prism_Orb10" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.126633, 1.3017786, 57.824944)
+
+[node name="Prism_Orb11" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.126633, 1.3017786, 53.824944)
+
+[node name="Prism_Orb6" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.12663, 1.3017786, 61.824944)
+
+[node name="Prism_Orb7" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.126631, 2.3017786, -10.175056)
+
+[node name="Prism_Orb8" parent="Collectibles" instance=ExtResource("5_l1hd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.12663, 1.3017786, 51.824944)
+
+[node name="Tutorial" type="Node" parent="."]
+
+[node name="Tutorial_Text" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 1)
+mesh = ExtResource("9_dym6d")
+
+[node name="Tutorial_Text2" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -3)
+mesh = ExtResource("10_0c6iv")
+
+[node name="Tutorial_Text3" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 2, 4)
+mesh = ExtResource("11_kdgoc")
+
+[node name="Tutorial_Text4" parent="Tutorial" instance=ExtResource("8_fuwiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, 1)
+mesh = ExtResource("12_2tg4p")
+
+[node name="Game_Manager" type="Node" parent="." node_paths=PackedStringArray("stage_manager", "collectible_manager")]
+script = ExtResource("1_3rhlx")
+stage_manager = NodePath("StageManager")
+collectible_manager = NodePath("CollectibleManager")
+
+[node name="CollectibleManager" type="Node" parent="Game_Manager" node_paths=PackedStringArray("sub_label", "ui", "portal") groups=["collectible_manager"]]
+script = ExtResource("6_adcqc")
+sub_label = NodePath("../../CanvasLayer/UI/MarginContainer/GridContainer/SubLabel")
+ui = NodePath("../../CanvasLayer/UI")
+portal = NodePath("../../Portal")
+
+[node name="StageManager" type="Node" parent="Game_Manager" node_paths=PackedStringArray("player", "world_environment", "sun_light", "portal")]
+script = ExtResource("3_7staa")
+player = NodePath("../../player")
+world_environment = NodePath("../Environment/WorldEnvironment")
+sun_light = NodePath("../Environment/DirectionalLight3D")
+portal = NodePath("../../Portal")
+
+[node name="Environment" type="Node" parent="Game_Manager"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Game_Manager/Environment"]
+environment = SubResource("Environment_5a7ea")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Game_Manager/Environment"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 18, 0)
+shadow_enabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_35yei")
+bus = &"Death"

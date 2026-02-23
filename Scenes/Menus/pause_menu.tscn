@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://buediwonbpcbq"]
 
 [ext_resource type="Script" uid="uid://cnjmcxgroeqio" path="res://Scripts/Menus/pause_menu.gd" id="1_8q8i5"]
-[ext_resource type="Shader" uid="uid://5xa2kw3ht5il" path="res://Scripts/Menus/pause_menu.gdshader" id="2_yeo1y"]
+[ext_resource type="Shader" uid="uid://5xa2kw3ht5il" path="res://Scripts/Shaders/pause_menu.gdshader" id="2_yeo1y"]
 [ext_resource type="FontFile" uid="uid://dswag30ipi0pa" path="res://Assets/Fonts/Comfortaa/Comfortaa-Bold.ttf" id="3_yeo1y"]
 [ext_resource type="FontFile" uid="uid://nmpac6q23uc0" path="res://Assets/Fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf" id="4_yeo1y"]
 [ext_resource type="AudioStream" uid="uid://c0sg0wa5i1w6x" path="res://Assets/Audio/glass_006.ogg" id="5_pw12o"]
@@ -215,22 +215,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_7smr3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_nwnlq")
 text = "RESTART"
 
-[node name="Controls" type="Button" parent="PanelContainer/MarginContainer/GridContainer/BoxContainer"]
-custom_minimum_size = Vector2(0, 49)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(1, 0.39215687, 0.3882353, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(1, 0.4745098, 0.6627451, 1)
-theme_override_fonts/font = ExtResource("3_yeo1y")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = SubResource("StyleBoxFlat_yeo1y")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pw12o")
-theme_override_styles/hover = SubResource("StyleBoxFlat_7smr3")
-theme_override_styles/focus = SubResource("StyleBoxFlat_nwnlq")
-text = "CONTROLS"
-
 [node name="Exit" type="Button" parent="PanelContainer/MarginContainer/GridContainer/BoxContainer"]
 custom_minimum_size = Vector2(0, 49)
 layout_mode = 2
@@ -261,7 +245,5 @@ bus = &"UI Sounds"
 [connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="mouse_entered" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Restart" to="." method="_on_restart_mouse_entered"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Restart" to="." method="_on_restart_pressed"]
-[connection signal="mouse_entered" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Controls" to="." method="_on_controls_mouse_entered"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Controls" to="." method="_on_options_pressed"]
 [connection signal="mouse_entered" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/GridContainer/BoxContainer/Exit" to="." method="_on_exit_pressed"]

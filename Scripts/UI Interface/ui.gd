@@ -1,6 +1,7 @@
 extends Control
 
 @export var sub_label: Label
+@onready var label: Label = $MarginContainer/GridContainer/Label
 
 
 # Called when the node enters the scene tree for the first time.

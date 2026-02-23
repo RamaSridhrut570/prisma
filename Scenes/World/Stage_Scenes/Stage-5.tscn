@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cenvou63xt1gn"]
+[gd_scene load_steps=16 format=3 uid="uid://cenvou63xt1gn"]
 
 [ext_resource type="PackedScene" uid="uid://devlugxym4dll" path="res://Scenes/World/Stages_Build/birth_stage.tscn" id="1_hrai3"]
 [ext_resource type="PackedScene" uid="uid://drq5xfghocn6y" path="res://Scenes/Player/player(Template).tscn" id="2_tygby"]
@@ -6,10 +6,14 @@
 [ext_resource type="FontFile" uid="uid://dpi8c8nmqo4nb" path="res://Assets/Fonts/Comfortaa/Comfortaa-Regular.ttf" id="4_d8loe"]
 [ext_resource type="PackedScene" uid="uid://buediwonbpcbq" path="res://Scenes/Menus/pause_menu.tscn" id="5_i6gmq"]
 [ext_resource type="PackedScene" uid="uid://bfhkenfq24rx6" path="res://Scenes/Collectibles/prism_orb.tscn" id="6_oww51"]
-[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/portal.tscn" id="7_8lfry"]
+[ext_resource type="PackedScene" uid="uid://uubdah43lg14" path="res://Scenes/World/portal.tscn" id="7_8lfry"]
 [ext_resource type="Script" uid="uid://bvc3oh2rembpl" path="res://Scripts/Game Managers/Stage wise/Stage-5.gd" id="8_hrai3"]
 [ext_resource type="Script" uid="uid://cwcdiibo26igj" path="res://Scripts/Game Managers/collectible_manager.gd" id="9_t56ua"]
 [ext_resource type="Script" uid="uid://dcsj4m20lbkxa" path="res://Scripts/Game Managers/stage_manager.gd" id="10_2uvh7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hrai3"]
+font = ExtResource("4_d8loe")
+font_size = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_3rhlx"]
 font = ExtResource("4_d8loe")
@@ -76,6 +80,12 @@ custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_hrai3")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SubLabel" type="Label" parent="CanvasLayer/UI/MarginContainer/GridContainer"]
 layout_mode = 2

@@ -26,7 +26,7 @@ var _current_stage: Stage = Stage.BIRTH
 @export var youth_color: Color = Color("FFC107")
 @export var adulthood_color: Color = Color("68bf00ff")
 @export var midlife_color: Color = Color("1f6778ff")
-@export var aging_color: Color = Color("400e5dff")
+@export var aging_color: Color = Color("5c1883ff")
 @export var death_color: Color = Color("B71C1C")
 
 # Levels / Color Stages
@@ -89,7 +89,7 @@ func _apply_stage_color(color: Color, stage: Stage) -> void:
 				env.fog_enabled = true
 				env.volumetric_fog_emission = color * 0.1
 				env.volumetric_fog_density = 0.08
-				env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+				env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SOFTLIGHT
 				env.glow_intensity = 0.8
 				env.glow_bloom = 0.3
 				env.adjustment_saturation = 1.50
@@ -161,11 +161,12 @@ func _apply_stage_color(color: Color, stage: Stage) -> void:
 func _setup_birth() -> void:
 	print("Stage: Birth")
 	_apply_stage_color(birth_color, Stage.BIRTH) # Soft Reddish/Pinkish (Sunrise/Peach)
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = childhood_color
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", childhood_color)
 	if not player: return
 
 	# --- MECHANICS ---
 	player.can_walk = true
+	player.can_torch = false
 	player.can_look = true
 	player.can_jump = false
 	player.can_sprint = false
@@ -180,7 +181,7 @@ func _setup_birth() -> void:
 	# --- SPEEDS ---
 	player.walking_speed = 5.0 # Slow, gentle pace
 	player.sprinting_speed = 5.0 # Same as walk
-	player.crouching_speed = 2.0
+	player.crouching_speed = 2.5
 	player.slide_speed = 0.0
 
 	# --- HEAD BOBBING ---
@@ -199,12 +200,13 @@ func _setup_birth() -> void:
 func _setup_childhood() -> void:
 	print("Stage: Childhood")
 	_apply_stage_color(childhood_color, Stage.CHILDHOOD) # Bright Orange (energetic/playful)
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = youth_color
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", youth_color)
 	if not player: return
 
 	# --- MECHANICS ---
 	player.can_walk = true
 	player.can_jump = true
+	player.can_torch = false
 	player.can_crouch = true
 	player.can_sprint = true
 	player.can_look = true
@@ -237,11 +239,12 @@ func _setup_childhood() -> void:
 func _setup_youth() -> void:
 	print("Stage: Youth")
 	_apply_stage_color(youth_color, Stage.YOUTH) # Amber/Gold (reflective)
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = adulthood_color
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", adulthood_color)
 	if not player: return
 
 	# FULL MOVEMENT KIT
 	player.can_walk = true
+	player.can_torch = false
 	player.can_sprint = true
 	player.can_crouch = true
 	player.can_slide = true # Sliding unlocked!
@@ -276,7 +279,7 @@ func _setup_youth() -> void:
 func _setup_adulthood() -> void:
 	print("Stage: Adulthood")
 	_apply_stage_color(adulthood_color, Stage.ADULTHOOD) # Light Green
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = midlife_color
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", midlife_color)
 	if not player: return
 
 	player.can_walk = true
@@ -284,6 +287,7 @@ func _setup_adulthood() -> void:
 	player.can_crouch = true
 	player.can_slide = true
 	player.can_jump = true
+	player.can_torch = false
 	
 	player.can_double_jump_mechanic = true
 	player.can_wall_climb = true
@@ -315,11 +319,12 @@ func _setup_adulthood() -> void:
 func _setup_midlife() -> void:
 	print("Stage: Midlife")
 	_apply_stage_color(midlife_color, Stage.MIDLIFE) # Deep Green (grounded)
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = aging_color
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", aging_color)
 	if not player: return
 
 	# Reflective, slightly heavier
 	player.can_walk = true
+	player.can_torch = true
 	player.can_sprint = true
 	player.can_crouch = true
 	player.can_slide = true
@@ -356,11 +361,12 @@ func _setup_midlife() -> void:
 func _setup_aging() -> void:
 	print("Stage: Aging")
 	_apply_stage_color(aging_color, Stage.AGING) # Purple (wisdom, calm)
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = death_color
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", death_color)
 	if not player: return
 
 	player.can_walk = true
 	player.can_jump = true
+	player.can_torch = true
 	
 	# Declining body
 	player.can_sprint = false
@@ -397,11 +403,12 @@ func _setup_aging() -> void:
 func _setup_death() -> void:
 	print("Stage: Death")
 	_apply_stage_color(death_color, Stage.DEATH) # Deep Red (finality)
-	if portal: portal.portalplane.get_surface_override_material(0).albedo_color = Color.WHITE
+	if portal and portal.material: portal.material.set_shader_parameter("portal_color", Color.WHITE)
 	if not player: return
 
 	# The final walk
 	player.can_walk = true
+	player.can_torch = true
 	player.can_look = true
 	player.can_free_look = true
 	
