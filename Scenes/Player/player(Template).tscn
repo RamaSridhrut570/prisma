@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://drq5xfghocn6y"]
 
 [ext_resource type="Script" uid="uid://8vt8msanc8j6" path="res://Scripts/Player Scripts/player.gd" id="1_uvnfx"]
-[ext_resource type="AudioStream" uid="uid://bytt5uglowy1" path="res://Assets/Audio/SFX/Player/footsteps.mp3" id="2_qjil8"]
+[ext_resource type="AudioStream" uid="uid://cmktost4kxabt" path="res://Assets/Audio/SFX/Player/footsteps.ogg" id="2_qjil8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xe20u"]
 
