@@ -8,6 +8,12 @@ const YOUTH_3 = preload("uid://2txh4d8r0wpc")
 const MAIN_MENU_3D = preload("uid://bev2rkaxkq873")
 const PRISMA___OST = preload("uid://8mg6pswbpkn2")
 
+
+# SFX plays when the player crosses this speed (warning threshold)
+@export var die_velocity_y: float = 81.0
+# Scene reloads when the player crosses this speed (death threshold)
+@export var max_velocity_y: float = 100.0
+
 @onready var portal: Node = $"../Portal"
 @export var death_sound: AudioStreamPlayer
 @export var stage_manager: Node
@@ -21,10 +27,7 @@ const PRISMA___OST = preload("uid://8mg6pswbpkn2")
 @export_group("BGM")
 @export var bgm_pitch_scale: float = 1.2
 
-# SFX plays when the player crosses this speed (warning threshold)
-@export var die_velocity_y: float = 81.0
-# Scene reloads when the player crosses this speed (death threshold)
-@export var max_velocity_y: float = 100.0
+
 
 var _player: CharacterBody3D = null
 var _sfx_played: bool = false # ensures SFX triggers only once
